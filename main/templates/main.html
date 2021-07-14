@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block titulo %} Dojo Reads {% endblock %}
+
+{% block content %}
+<h4>Welcome {{ user.first_names }} {{ user.last_names }}</h4>
+<a href="addbook" class="btn btn-primary m-4">Add Book and Review</a>
+<div class="row">
+    <div class="col-6">
+        <h4>Recent books</h4>
+        {% for book in books|slice:":3" %}
+        <h5><a href="book/{{ book.id }}">{{ book.title }}</a></h5>
+        <li>{{ book.author.name }}</li>
+        <li>Agregado el: {{ book.created_at | date:'d-m-Y' }} a las {{ book.created_at | date:'H:i'}}Hrs</li>
+        <li>Rating promedio:{{ book.reviews__rating__avg|floatformat }} </li>
+        <h6>Last reviews</h6>
+        <ul>
+            <li><a href="user/{{book.reviews.last.user.id}}">{{ book.reviews.last.user.first_names }} {{ book.reviews.last.user.last_names }}</a> dice: {{ book.reviews.last.review }}</li>
+            <ul>
+                <li>La calificación fue de: {{ book.reviews.last.rating }}</li>
+            </ul>
+            <li>Publicado el: {{ book.reviews.last.created_at | date:'d M, Y' }}</li>
+        </ul>
+        {% endfor %}
+    </div>
+    <div class="col-6">
+        <h4>Other books with Reviews</h4>
+        {% for book in books %}
+            <li><a href="book/{{book.id}}">{{ book.title }}</a></li>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}

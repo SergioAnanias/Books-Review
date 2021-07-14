@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>{{ user.first_names }} {{ user.last_names }}</h1>
+
+<div class="row">
+    <div class="col-6">
+        <h5>Email: {{ user.email }}</h5>
+        <h5>Total reviews: {{ totalreviews.total_review }}</h5>
+        <h5>Posted reviews on the following books:</h5>
+        <ul>
+        {% for review in user.reviews.all %}
+            <li><a href="../book/{{review.book.id}}"><strong>{{ review.book.title }}</strong></a></li>
+        {% endfor %}
+    </ul>
+    </div>
+    <div class="col-6">
+
+    </div>
+</div>
+
+
+{% endblock %}
